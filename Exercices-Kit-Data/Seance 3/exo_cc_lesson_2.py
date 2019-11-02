@@ -28,6 +28,7 @@ URL_PAGE3 = "https://kim.fspot.org/cours/page3.html"
 #             'databases': 25
 #         }
 #     }
+
 def get_prices_from_url(url):
     page = requests.get(url).text
     soup = bs4.BeautifulSoup(page)
@@ -36,7 +37,7 @@ def get_prices_from_url(url):
 
     for content in div.find_all('div',class_ = re.compile("pure-u-1 pure-u-md-1")): 
 
-        
+        d2 = {}
 
         a = content.find('span',class_ = "pricing-table-price" ).text.strip()
         d2['price'] = a[:a.find(' ')]
@@ -45,7 +46,7 @@ def get_prices_from_url(url):
         d2['storage'] = a[:a.find(' ')]
 
         a = content.find('ul',class_ = "pricing-table-list" ).find_all('li')[4].text
-        d2['databases'] = a[:a.find(' ')]
+        d2['databases'] = int(a[:a.find(' ')])
 
         key = content.find('h2').text
 
